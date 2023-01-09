@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using Model;
+using OpenQA.Selenium.Chrome;
 
 namespace WebScraper {
     public class Scraper : IDisposable, IBasicScraper {
@@ -42,6 +43,10 @@ namespace WebScraper {
 
         public void Navigate(string url) {
             driver.Navigate().GoToUrl(url);
+        }
+
+        public void Read<T>(ByMethod byMethod, string elementSelector, Action<T> setPropertyAction) {
+            throw new NotImplementedException();
         }
     }
 }

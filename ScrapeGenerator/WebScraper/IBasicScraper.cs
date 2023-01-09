@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebScraper {
     public interface IBasicScraper {
         void Navigate(string url);
-        public void Read(ByMethod byMethod);
+        public void Read<T>(ByMethod byMethod, string elementSelector, Action<T> setPropertyAction);
         //public void Iterate();
         //public void Click();
     }
