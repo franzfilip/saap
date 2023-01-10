@@ -1,12 +1,17 @@
-﻿using Model;
+﻿using DomainModels;
 using OpenQA.Selenium.Chrome;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebScraper {
-    public class Scraper : IDisposable, IBasicScraper {
+namespace SeleniumBasicUtilities {
+    public class BasicScraper : IDisposable, IBasicScraper {
 
         protected readonly ChromeDriver driver;
 
-        public Scraper(string driverpath) {
+        public BasicScraper(string driverpath) {
             driver = CreateDriver(driverpath);
         }
 
