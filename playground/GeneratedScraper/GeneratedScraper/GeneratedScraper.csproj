@@ -7,4 +7,17 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Selenium.WebDriver" Version="4.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DomainModels">
+      <HintPath>..\..\..\SeleniumBasicUtilities\SeleniumBasicUtilities\bin\Release\net6.0\DomainModels.dll</HintPath>
+    </Reference>
+    <Reference Include="SeleniumBasicUtilities">
+      <HintPath>..\..\..\SeleniumBasicUtilities\SeleniumBasicUtilities\bin\Release\net6.0\SeleniumBasicUtilities.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

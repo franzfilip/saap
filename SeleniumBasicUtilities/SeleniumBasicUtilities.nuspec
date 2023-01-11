@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>SeleniumBasicUtilities</id>
+    <version>1.0.2</version>
+    <authors>dejavu</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <!-- <icon>icon.png</icon> -->
+    <!-- <projectUrl>http://project_url_here_or_delete_this_line/</projectUrl> -->
+    <description>Contains basic utilities for selenium</description>
+    <!-- <releaseNotes>Summary of changes made in this release of the package.</releaseNotes> -->
+    <copyright>$copyright$</copyright>
+    <!-- <tags>Tag1 Tag2</tags> -->
+    <dependencies>
+      <group targetFramework="net6.0">
+      <!-- List dependencies for net6.0 here -->
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- <file src="DomainModels\bin\Release\**\*.*" target="lib"/> -->
+    <file src="SeleniumBasicUtilities\bin\Release\**\*.*" target="lib"/>
+  </files>
+</package>

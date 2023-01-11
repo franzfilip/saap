@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace CodeGenerator {
     public class ScrapeCodeGenerator {
-
+        
     }
 }
