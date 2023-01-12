@@ -1,0 +1,57 @@
+{
+    "Inputs": [
+        {
+            "ClassName": "Article",
+            "Properties": [
+                { "Type": "string", "Name": "Title" },
+                { "Type": "string", "Name": "Text" },
+                { "Type": "string", "Name": "URL" }
+            ],
+            "Actions": [
+                {
+                    "Kind": "NAVIGATE",
+                    "URL": "https://www.orf.at",
+                    "PropertyPath": "",
+                    "SubAction": null
+                },
+                {
+                    "Kind": "ExtractData",
+                    "URL": "",
+                    "PropertyPath": "Name",
+                    "SubAction": {
+                        "Kind": "SaveData",
+                        "URL": "",
+                        "PropertyPath": "",
+                        "SubAction": null
+                    }
+                }
+            ]
+        },
+        {
+            "ClassName": "Car",
+            "Properties": [
+                { "Type": "string", "Name": "Brand" },
+                { "Type": "string", "Name": "Model" }
+            ],
+            "Actions": [
+                {
+                    "Kind": "OpenUrl",
+                    "URL": "https://example.com/cars",
+                    "PropertyPath": "",
+                    "SubAction": null
+                },
+                {
+                    "Kind": "ExtractData",
+                    "URL": "",
+                    "PropertyPath": "Brand",
+                    "SubAction": {
+                        "Kind": "SaveData",
+                        "URL": "",
+                        "PropertyPath": "",
+                        "SubAction": null
+                    }
+                }
+            ]
+        }
+    ]
+}
