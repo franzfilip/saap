@@ -5,11 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DomainModels {
-    public enum KindOfAction {
-        NAVIGATE,
-        READ,
-        ITERATE,
-        CLICK,
-        GETURL
+    public class Step {
+        public List<Action> Actions { get; set; }
+        public string Description { get; set; }
     }
 }

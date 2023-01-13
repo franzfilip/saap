@@ -19,7 +19,12 @@ namespace GeneratedScraper {
         public void Start() {
             using(BasicScraper scraper = new BasicScraper("C:\\chromedriver2")) {
                 scraper.Navigate("https://www.orf.at");
+
+                List<Article> articles = scraper.ReadMultiple<Article>(ByMethod.CSSSELECTOR, "oon-grid-item", (a, s) => a.Text = s);
+                Console.WriteLine();
             }
         }
+
+        
     }
 }

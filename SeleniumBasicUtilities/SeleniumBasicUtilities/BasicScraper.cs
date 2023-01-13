@@ -54,14 +54,14 @@ namespace SeleniumBasicUtilities {
         }
 
         public T Read<T>(ByMethod byMethod, string elementSelector, Action<T, string> setPropertyAction) {
-            IWebElement element = ReadElementBy(byMethod, elementSelector);
+            IWebElement element = FindElementBy(byMethod, elementSelector);
             T instance = (T)Activator.CreateInstance(typeof(T));
             setPropertyAction(instance, element.Text);
             return instance;
         }
 
         public List<T> ReadMultiple<T>(ByMethod byMethod, string elementSelector, Action<T, string> setPropertyAction) {
-            ReadOnlyCollection<IWebElement> elements = ReadElementsBy(byMethod, elementSelector);
+            ReadOnlyCollection<IWebElement> elements = FindElementsBy(byMethod, elementSelector);
             List<T> results = new List<T>();
 
             foreach (var webElement in elements) {
@@ -73,7 +73,7 @@ namespace SeleniumBasicUtilities {
             return results;
         }
 
-        public IWebElement ReadElementBy(ByMethod byMethod, string elementSelector) {
+        public IWebElement FindElementBy(ByMethod byMethod, string elementSelector) {
             switch (byMethod) {
                 case ByMethod.ID:
                     return driver.FindElement(By.Id(elementSelector));
@@ -96,7 +96,7 @@ namespace SeleniumBasicUtilities {
             }
         }
 
-        public ReadOnlyCollection<IWebElement> ReadElementsBy(ByMethod byMethod, string elementSelector) {
+        public ReadOnlyCollection<IWebElement> FindElementsBy(ByMethod byMethod, string elementSelector) {
             switch (byMethod) {
                 case ByMethod.ID:
                     return driver.FindElements(By.Id(elementSelector));
