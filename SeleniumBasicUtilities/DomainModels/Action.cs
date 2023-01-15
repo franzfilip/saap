@@ -10,6 +10,8 @@ namespace DomainModels {
         public KindOfAction Kind { get; set; }
         public string URL { get; set; }
         public string PropertyPath { get; set; }
+        public ByMethod ElementSelector { get; set; }
+        public string ElementIdentifier { get; set; }
         public Action SubAction { get; set; }
     }
 }

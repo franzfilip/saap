@@ -7,27 +7,50 @@
                 { "Type": "string", "Name": "Text" }
             ],
             "HasURL": true
+        },
+        {
+            "ClassName": "Data",
+            "Properties": [
+                { "Type": "List<Article>", "Name": "MainArticles" },
+                { "Type": "List<Article>", "Name": "SubArticles" }
+            ]
         }
     ],
     "Steps": [
         {
-            "Description": "Save all main articles of the website",
+            "Description": "Go to URL and accept cookies",
+            "Name": "GoToORFAndAcceptCookies",
             "Actions": [
                 {
                     "Kind": "NAVIGATE",
                     "URL": "https://www.orf.at",
-                    "PropertyPath": "",
-                    "SubAction": null
-                },
+                    "SubAction": {
+                        "Kind": "WAITUNTILELEMENTEXISTS",
+                        "ElementIdentifier": "wrapper",
+                        "ElementSelector": "CLASS",
+                        "SubAction": {
+                            "Kind": "TRYCLICK",
+                            "ElementIdentifier": "didomi-notice-agree-button",
+                            "ElementSelector": "ID",
+                            "SubAction": null
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "Description": "Save all main articles of the website",
+            "Name": "SaveMainArticles",
+            "Actions": [
                 {
                     "Kind": "FindElements",
-                    "URL": "",
-                    "PropertyPath": "",
                     "SubAction": {
-                        "Kind": "SaveData",
-                        "URL": "",
-                        "PropertyPath": "",
-                        "SubAction": null
+                        "Kind": "ITERATEOVERELEMENTS",
+                        "SubAction": {
+                            "Kind": "SAVEDATA",
+                            
+                            "PropertyPath": ""
+                        }
                     }
                 }
             ]

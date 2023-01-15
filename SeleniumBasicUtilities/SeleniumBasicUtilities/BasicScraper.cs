@@ -1,6 +1,7 @@
 ﻿using DomainModels;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,67 +54,90 @@ namespace SeleniumBasicUtilities {
             driver.Navigate().GoToUrl(url);
         }
 
-        public T Read<T>(ByMethod byMethod, string elementSelector, Action<T, string> setPropertyAction) {
-            IWebElement element = FindElementBy(byMethod, elementSelector);
+        public void NavigateBack() {
+            driver.Navigate().Back();
+        }
+
+        public IWebElement FindElement(ByMethod by, string name) {
+            return driver.FindElement(GetBy(by, name));
+        }
+
+        public List<IWebElement> FindElements(ByMethod by, string name) {
+            return driver.FindElements(GetBy(by, name)).ToList();
+        }
+
+        public IWebElement FindElement(ByMethod by, string name, IWebElement element) {
+            By findBy = GetBy(by, name);
+            return element.FindElement(findBy);
+        }
+
+        public List<IWebElement> FindElements(ByMethod by, string name, IWebElement element) {
+            By findBy = GetBy(by, name);
+            return element.FindElements(findBy).ToList();
+        }
+
+        public bool WaitUntilElementExists(ByMethod waitUntilElementBy, string waitUntilElementExists) {
+            WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+            IWebElement element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(GetBy(waitUntilElementBy, waitUntilElementExists)));
+            return element != null;
+        }
+
+        public T Read<T>(IWebElement element, Action<T, string> setPropertyAction) {
             T instance = (T)Activator.CreateInstance(typeof(T));
             setPropertyAction(instance, element.Text);
             return instance;
         }
 
-        public List<T> ReadMultiple<T>(ByMethod byMethod, string elementSelector, Action<T, string> setPropertyAction) {
-            ReadOnlyCollection<IWebElement> elements = FindElementsBy(byMethod, elementSelector);
-            List<T> results = new List<T>();
-
-            foreach (var webElement in elements) {
-                T instance = (T)Activator.CreateInstance(typeof(T));
-                setPropertyAction(instance, webElement.Text);
-                results.Add(instance);
-            }
-
-            return results;
+        public T Read<T>(ByMethod by, string elementSelector, Action<T, string> setPropertyAction) {
+            IWebElement element = FindElement(by, elementSelector);
+            return Read(element, setPropertyAction);
         }
 
-        public IWebElement FindElementBy(ByMethod byMethod, string elementSelector) {
-            switch (byMethod) {
-                case ByMethod.ID:
-                    return driver.FindElement(By.Id(elementSelector));
-                case ByMethod.NAME:
-                    return driver.FindElement(By.Name(elementSelector));
-                case ByMethod.CLASSNAME:
-                    return driver.FindElement(By.ClassName(elementSelector));
-                case ByMethod.TAGNAME:
-                    return driver.FindElement(By.TagName(elementSelector));
-                case ByMethod.LINKTEXT:
-                    return driver.FindElement(By.LinkText(elementSelector));
-                case ByMethod.PARTIALLINKTEXT:
-                    return driver.FindElement(By.PartialLinkText(elementSelector));
-                case ByMethod.CSSSELECTOR:
-                    return driver.FindElement(By.CssSelector(elementSelector));
-                case ByMethod.XPATH:
-                    return driver.FindElement(By.XPath(elementSelector));
-                default:
-                    throw new ArgumentException("Invalid locator method.");
+        public bool TryClickElement(ByMethod byMethod, string elementSelector) {
+            try {
+                IWebElement element = driver.FindElement(GetBy(byMethod, elementSelector));
+                element.Click();
+                return true;
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return false;
             }
         }
 
-        public ReadOnlyCollection<IWebElement> FindElementsBy(ByMethod byMethod, string elementSelector) {
+        public bool TryClickElement(IWebElement element) {
+            try {
+                element.Click();
+                return true;
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+
+        public void Iterate(List<IWebElement> elements) {
+
+        }
+
+        private By GetBy(ByMethod byMethod, string elementSelector) {
             switch (byMethod) {
                 case ByMethod.ID:
-                    return driver.FindElements(By.Id(elementSelector));
+                    return By.Id(elementSelector);
                 case ByMethod.NAME:
-                    return driver.FindElements(By.Name(elementSelector));
+                    return By.Name(elementSelector);
                 case ByMethod.CLASSNAME:
-                    return driver.FindElements(By.ClassName(elementSelector));
+                    return By.ClassName(elementSelector);
                 case ByMethod.TAGNAME:
-                    return driver.FindElements(By.TagName(elementSelector));
+                    return By.TagName(elementSelector);
                 case ByMethod.LINKTEXT:
-                    return driver.FindElements(By.LinkText(elementSelector));
+                    return By.LinkText(elementSelector);
                 case ByMethod.PARTIALLINKTEXT:
-                    return driver.FindElements(By.PartialLinkText(elementSelector));
+                    return By.PartialLinkText(elementSelector);
                 case ByMethod.CSSSELECTOR:
-                    return driver.FindElements(By.CssSelector(elementSelector));
+                    return By.CssSelector(elementSelector);
                 case ByMethod.XPATH:
-                    return driver.FindElements(By.XPath(elementSelector));
+                    return By.XPath(elementSelector);
                 default:
                     throw new ArgumentException("Invalid locator method.");
             }
