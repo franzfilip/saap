@@ -17,8 +17,8 @@ namespace SeleniumBasicUtilities {
         List<IWebElement> FindElements(ByMethod by, string name, IWebElement element);
         void NavigateBack();
         bool TryClickElement(IWebElement element);
-        T Read<T>(ByMethod by, string elementSelector, Action<T, string> setPropertyAction);
-        T Read<T>(IWebElement element, Action<T, string> setPropertyAction);
+        string Read(ByMethod by, string elementSelector);
+        string Read(IWebElement element);
         //public void Iterate();
         //public void Click();
     }

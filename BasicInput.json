@@ -1,4 +1,6 @@
 {
+    "Namespace": "GeneratedScraper",
+    "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff",
     "Models": [
         {
             "ClassName": "Article",
@@ -43,7 +45,9 @@
             "Name": "SaveMainArticles",
             "Actions": [
                 {
-                    "Kind": "FindElements",
+                    "Kind": "ITERATE",
+                    "ElementSelector": "CSSSELECTOR",
+                    "ElementIdentifier": "",
                     "SubAction": {
                         "Kind": "ITERATEOVERELEMENTS",
                         "SubAction": {

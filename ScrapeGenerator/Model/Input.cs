@@ -1,7 +1,7 @@
 ﻿namespace Model {
     public record Input {
-        public string ClassName { get; set; }
-        public List<(string Type, string Name)> Properties { get; set; }
-        public List<Action> Actions { get; set; }
+        public string Namespace { get; set; }
+        public List<Model> Models { get; set; }
+        public string Path { get; set; }
     }
 }

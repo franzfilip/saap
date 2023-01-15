@@ -82,15 +82,13 @@ namespace SeleniumBasicUtilities {
             return element != null;
         }
 
-        public T Read<T>(IWebElement element, Action<T, string> setPropertyAction) {
-            T instance = (T)Activator.CreateInstance(typeof(T));
-            setPropertyAction(instance, element.Text);
-            return instance;
+        public string Read(IWebElement element) {
+            return element.Text;
         }
 
-        public T Read<T>(ByMethod by, string elementSelector, Action<T, string> setPropertyAction) {
+        public string Read(ByMethod by, string elementSelector) {
             IWebElement element = FindElement(by, elementSelector);
-            return Read(element, setPropertyAction);
+            return Read(element);
         }
 
         public bool TryClickElement(ByMethod byMethod, string elementSelector) {

@@ -4,29 +4,27 @@ using System.Linq;
 using Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Utility;
 
-namespace ScrapeGenerator.CodeGenerator {
+namespace CodeGenerator {
     public static class DataClassGenerator {
-        public static string GenerateDataClass(Input input) {
-            // Create a list to hold the property strings
-            List<string> propertyStrings = CreatePropertyStrings(input.Properties);
+        public static void GenerateDataClasses(Input input) {
+            foreach (var model in input.Models) {
+                string classString = $@"
+namespace {input.Namespace} {{
+    public record {model.ClassName} {{
+{String.Join("", CreatePropertyStrings(model.Properties).Select(s => "\t\t" + s))}
+    }}
+}}
+";
 
-            // Join the property strings into a single string
-            string propertiesString = string.Join("\n", propertyStrings);
+                FileOperations.WriteToFile(classString, input.Path, model.ClassName + ".cs");
+            }
 
-            // Create the class string
-            string classString = $@"
-            public class {input.ClassName}
-            {{
-                {propertiesString}
-            }}
-        ";
-
-            return classString;
         }
 
-        private static List<string> CreatePropertyStrings(List<(string Type, string Name)> properties) {
-            return properties.Select(p => $"public {p.Type} {p.Name} {{ get; set; }}").ToList();
+        private static List<string> CreatePropertyStrings(List<MyProperty> properties) {
+            return properties.Select(p => $"public {p.Type} {p.Name} {{ get; set; }}\n").ToList();
         }
     }
 }
