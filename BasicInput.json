@@ -1,6 +1,6 @@
 {
     "Namespace": "GeneratedScraper",
-    "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff",
+    "Path": "C:\\repos\\saap\\GeneratedStuff",
     "Models": [
         {
             "ClassName": "Article",
@@ -29,9 +29,9 @@
                     "SubAction": {
                         "Kind": "WAITUNTILELEMENTEXISTS",
                         "ElementIdentifier": "wrapper",
-                        "ElementSelector": "CLASS",
+                        "ElementSelector": "CLASSNAME",
                         "SubAction": {
-                            "Kind": "TRYCLICK",
+                            "Kind": "CLICK",
                             "ElementIdentifier": "didomi-notice-agree-button",
                             "ElementSelector": "ID",
                             "SubAction": null
@@ -43,17 +43,34 @@
         {
             "Description": "Save all main articles of the website",
             "Name": "SaveMainArticles",
+            "NeedsToIterateOverElements": true,
             "Actions": [
                 {
                     "Kind": "ITERATE",
                     "ElementSelector": "CSSSELECTOR",
-                    "ElementIdentifier": "",
+                    "ElementIdentifier": "div.oon-grid-top .oon-grid-item",
+                    "PropertyPath": "data.MainArticles",
+                    "TypeGenerated": "Article",
                     "SubAction": {
-                        "Kind": "ITERATEOVERELEMENTS",
+                        "Kind": "READ",
+                        "PropertyPath": "article.Title",
+                        "TypeGenerated": "Article",
                         "SubAction": {
-                            "Kind": "SAVEDATA",
-                            
-                            "PropertyPath": ""
+                            "Kind": "CLICK",
+                            "SubAction": {
+                                "Kind": "READ",
+                                "PropertyPath": "article.Description",
+                                "TypeGenerated": "Article",
+                                "ElementIdentifier": "story-lead",
+                                "ElementSelector": "CLASSNAME",
+                                "SubAction": {
+                                    "Kind": "READ",
+                                    "PropertyPath": "article.Text",
+                                    "TypeGenerated": "Article",
+                                    "ElementIdentifier": "story-content",
+                                    "ElementSelector": "CLASSNAME"
+                                }
+                            }
                         }
                     }
                 }

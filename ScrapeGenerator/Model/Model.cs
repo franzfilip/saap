@@ -8,7 +8,6 @@ namespace Model {
     public class Model {
         public string ClassName { get; set; }
         public List<MyProperty> Properties { get; set; }
-        public List<Action> Actions { get; set; }
         public bool HasURL { get; set; }
     }
 }

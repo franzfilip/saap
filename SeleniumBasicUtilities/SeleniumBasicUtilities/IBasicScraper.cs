@@ -19,7 +19,5 @@ namespace SeleniumBasicUtilities {
         bool TryClickElement(IWebElement element);
         string Read(ByMethod by, string elementSelector);
         string Read(IWebElement element);
-        //public void Iterate();
-        //public void Click();
     }
 }

@@ -9,6 +9,7 @@ namespace Model {
         NAVIGATE,
         READ,
         ITERATE,
-        CLICK
+        CLICK,
+        WAITUNTILELEMENTEXISTS
     }
 }
