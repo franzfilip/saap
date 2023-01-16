@@ -6,6 +6,7 @@
             "ClassName": "Article",
             "Properties": [
                 { "Type": "string", "Name": "Title" },
+                { "Type": "string", "Name": "Description" },
                 { "Type": "string", "Name": "Text" }
             ],
             "HasURL": true
