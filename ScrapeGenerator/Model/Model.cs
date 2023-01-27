@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Model {
-    public class Model {
+    public record Model {
         public string ClassName { get; set; }
         public List<MyProperty> Properties { get; set; }
         public bool HasURL { get; set; }
