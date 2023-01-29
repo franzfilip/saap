@@ -1,6 +1,6 @@
 {
     "Namespace": "GeneratedScraper",
-    "Path": "C:\\repos\\saap\\GeneratedStuff",
+    "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff2",
     "Models": [
         {
             "ClassName": "Article",
@@ -54,20 +54,17 @@
                     "TypeGenerated": "Article",
                     "SubAction": {
                         "Kind": "READ",
-                        "PropertyPath": "article.Title",
-                        "TypeGenerated": "Article",
+                        "PropertyPath": "Title",
                         "SubAction": {
                             "Kind": "CLICK",
                             "SubAction": {
                                 "Kind": "READ",
-                                "PropertyPath": "article.Description",
-                                "TypeGenerated": "Article",
+                                "PropertyPath": "Description",
                                 "ElementIdentifier": "story-lead",
                                 "ElementSelector": "CLASSNAME",
                                 "SubAction": {
                                     "Kind": "READ",
-                                    "PropertyPath": "article.Text",
-                                    "TypeGenerated": "Article",
+                                    "PropertyPath": "Text",
                                     "ElementIdentifier": "story-content",
                                     "ElementSelector": "CLASSNAME"
                                 }

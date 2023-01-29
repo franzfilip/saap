@@ -14,9 +14,10 @@ namespace CodeGenerator {
     public class ScrapeCodeGenerator {
         private List<string> fileContent = new();
         private readonly Input input;
-
-        public ScrapeCodeGenerator(Input input) {
+        private readonly List<MethodToGenerate> methodsToGenerate;
+        public ScrapeCodeGenerator(Input input, List<MethodToGenerate> methodsToGenerate) {
             this.input = input;
+            this.methodsToGenerate = methodsToGenerate;
         }
 
         public void CreateFile() {
@@ -56,12 +57,23 @@ namespace CodeGenerator {
             fileContent.Add("Data data = new Data();".PutTabsBeforeText(tabs + 1));
             CreateUsingForStart(tabs + 1);
             fileContent.Add("}".PutTabsBeforeText(tabs));
-            CreateSteps(tabs);
+            //CreateSteps(tabs);
+            CreateMethods(tabs);
+        }
+
+        private void CreateMethods(int tabs) {
+            foreach(var method in methodsToGenerate) {
+                fileContent.Add($"//{method.Signature.Comment}".PutTabsBeforeText(tabs));
+                fileContent.Add($"{method.Signature.Accessor} {method.Signature.ReturnType} {method.Signature.Name}()".PutTabsBeforeText(tabs));
+                fileContent.Add("{".PutTabsBeforeText(tabs));
+                fileContent.AddRange(method.Body.Select(s => s.PutTabsBeforeText(tabs + 1)));
+                fileContent.Add("}".PutTabsBeforeText(tabs));
+            }
         }
 
         private void CreateUsingForStart(int tabs) {
             fileContent.Add("using(BasicScraper scraper = new BasicScraper(\"C:\\\\chromedriver2\")) {".PutTabsBeforeText(tabs));
-            CreateUsingContentForStart(tabs + 1);
+            //CreateUsingContentForStart(tabs + 1);
             fileContent.Add("}".PutTabsBeforeText(tabs));
         }
 

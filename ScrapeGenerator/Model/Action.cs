@@ -14,5 +14,9 @@ namespace Model {
         public string ElementIdentifier { get; set; }
         public Action SubAction { get; set; }
         public string TypeGenerated { get; set; }
+
+        public bool GeneratesData() {
+            return Kind == KindOfAction.READ || Kind == KindOfAction.ITERATE;
+        }
     }
 }

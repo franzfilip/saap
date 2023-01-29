@@ -7,9 +7,12 @@ using Utility;
 
 internal class Program {
     public static void Main(string[] args) {
-        Input input = FileOperations.ReadJson("C:\\repos\\saap\\BasicInput.json");
-        DataClassGenerator.GenerateDataClasses(input);
-        ScrapeCodeGenerator scrapeCodeGenerator = new ScrapeCodeGenerator(input);
-        scrapeCodeGenerator.CreateFile();
+        Input input = FileOperations.ReadJson("C:\\FH\\Master\\SAAP\\projectrepo\\saap\\BasicInput.json");
+        //DataClassGenerator.GenerateDataClasses(input);
+        //ScrapeCodeGenerator scrapeCodeGenerator = new ScrapeCodeGenerator(input);
+        //scrapeCodeGenerator.CreateFile();
+        CodeFactory codeFactory = new CodeFactory(input);
+        codeFactory.GenerateCode();
+        Console.WriteLine();
     }
 }
