@@ -1,4 +1,4 @@
-﻿namespace Model {
+﻿namespace DataModel {
     public record Input {
         public string Namespace { get; set; }
         public List<Model> Models { get; set; }

@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodeGenerator;
-using Model;
+using DataModel;
 using Newtonsoft.Json;
 using System.Text.Json;
 using Utility;

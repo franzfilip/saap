@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScrapeGenerator", "ScrapeGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeGenerator", "ScrapeGenerator.CodeGenerator\CodeGenerator.csproj", "{A25F3D59-1B6E-49C1-AB5A-C575636C14D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{19C13B73-877E-4E99-9326-A4CCA3210A41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "Model\DataModel.csproj", "{19C13B73-877E-4E99-9326-A4CCA3210A41}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility", "Utility\Utility.csproj", "{AA40ABFF-5446-40B8-B34D-9CA07AC6F79F}"
 EndProject

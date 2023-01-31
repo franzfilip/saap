@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model {
+namespace DataModel {
     public record Action {
         public KindOfAction Kind { get; set; }
         public string URL { get; set; }

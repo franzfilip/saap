@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using DataModel;
 using Newtonsoft.Json;
 
 namespace Utility {

@@ -1,4 +1,4 @@
-﻿using Model;
+﻿using DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,7 +80,7 @@ namespace CodeGenerator {
         private void CreateUsingContentForStart(int tabs) {
             foreach (var step in input.Steps) {
                 if (step.NeedsToIterateOverElements) {
-                    Model.Action action = step.Actions.First();
+                    DataModel.Action action = step.Actions.First();
                     //fileContent.Add($"{step.Actions.First().PropertyPath} = {step.Name}(scraper);".PutTabsBeforeText(tabs));
                     fileContent.Add($"{action.PropertyPath} = {step.Name}(scraper, () => scraper.FindElements(ByMethod.{action.ElementSelector}, \"{action.ElementIdentifier}\"));".PutTabsBeforeText(tabs));
                 }
@@ -115,7 +115,7 @@ namespace CodeGenerator {
             }
         }
 
-        private void CreateActionAndSubActions(Model.Action action, int tabs) {
+        private void CreateActionAndSubActions(DataModel.Action action, int tabs) {
             ActionToGenerate(action, tabs);
             action = action.SubAction;
             while(action != null) {
@@ -124,7 +124,7 @@ namespace CodeGenerator {
             }
         }
 
-        private void CreateSubActions(Model.Action action, int tabs) {
+        private void CreateSubActions(DataModel.Action action, int tabs) {
             action = action.SubAction;
             while (action != null) {
                 ActionToGenerate(action, tabs);
@@ -132,7 +132,7 @@ namespace CodeGenerator {
             }
         }
 
-        private void ActionToGenerate(Model.Action action, int tabs) {
+        private void ActionToGenerate(DataModel.Action action, int tabs) {
             switch (action.Kind) {
                 case KindOfAction.NAVIGATE:
                     CreateNavigationCall(action, tabs);
@@ -152,15 +152,15 @@ namespace CodeGenerator {
             }
         }
 
-        private void CreateNavigationCall(Model.Action action, int tabs) {
+        private void CreateNavigationCall(DataModel.Action action, int tabs) {
             fileContent.Add($"scraper.Navigate(\"{action.URL}\");".PutTabsBeforeText(tabs));
         }
 
-        private void CreateWaitUntilCall(Model.Action action, int tabs) {
+        private void CreateWaitUntilCall(DataModel.Action action, int tabs) {
             fileContent.Add($"scraper.WaitUntilElementExists(ByMethod.{action.ElementSelector}, \"{action.ElementIdentifier}\");".PutTabsBeforeText(tabs));
         }
 
-        private void CreateClickCall(Model.Action action, int tabs) {
+        private void CreateClickCall(DataModel.Action action, int tabs) {
             if(action.ElementIdentifier == null) {
                 fileContent.Add($"scraper.TryClickElement(element);".PutTabsBeforeText(tabs));
             }
@@ -170,11 +170,11 @@ namespace CodeGenerator {
             fileContent.Add($"Thread.Sleep(250);".PutTabsBeforeText(tabs));
         }
 
-        private void CreateIterateCall(Model.Action action, int tabs) {
+        private void CreateIterateCall(DataModel.Action action, int tabs) {
             fileContent.Add($"{action.PropertyPath} = IterateAndGetMainArticles(scraper, () => scraper.FindElements(ByMethod.{action.ElementSelector}, \"{action.ElementIdentifier}\"));".PutTabsBeforeText(tabs));
         }
 
-        private void CreateReadCall(Model.Action action, int tabs) {
+        private void CreateReadCall(DataModel.Action action, int tabs) {
             if(action.ElementIdentifier != null) {
                 fileContent.Add($"{action.TypeGenerated.ToLower()}.{action.PropertyPath.Split(".")[action.PropertyPath.Split(".").Length - 1]} = scraper.Read(ByMethod.{action.ElementSelector}, \"{action.ElementIdentifier}\");".PutTabsBeforeText(tabs));
             }
@@ -189,7 +189,7 @@ namespace CodeGenerator {
             CreateIterateFunctionBody(step.Actions, tabs + 1);
         }
 
-        private void CreateIterateFunctionBody(List<Model.Action> actions, int tabs, string name = "collected") {
+        private void CreateIterateFunctionBody(List<DataModel.Action> actions, int tabs, string name = "collected") {
             fileContent.Add("List<IWebElement> elements = getElements();".PutTabsBeforeText(tabs));
             fileContent.Add($"List<{actions.First().TypeGenerated}> {name} = new();".PutTabsBeforeText(tabs));
             fileContent.Add("for(int i = 0; i < elements.Count; i++) {".PutTabsBeforeText(tabs));
@@ -198,7 +198,7 @@ namespace CodeGenerator {
             fileContent.Add($"return {name};".PutTabsBeforeText(tabs));
         }
 
-        private void CreateBodyForLoop(List<Model.Action> actions, int tabs) {
+        private void CreateBodyForLoop(List<DataModel.Action> actions, int tabs) {
             string typeGenerated = actions.First().TypeGenerated;
             fileContent.Add($"{typeGenerated} {typeGenerated.ToLower()} = new {typeGenerated}();".PutTabsBeforeText(tabs));
             fileContent.Add("IWebElement element = elements[i];".PutTabsBeforeText(tabs));

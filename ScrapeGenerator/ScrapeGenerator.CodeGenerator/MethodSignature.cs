@@ -9,8 +9,7 @@ namespace CodeGenerator {
         public string Comment { get; set; }
         public string Accessor { get; set; } = "private";
         public string ReturnType { get; set; }
-        //public Type ReturnType { get; set; }
         public string Name { get; set; }
-        public List<Tuple<Type, string>> Param { get; set; } = new();
+        public List<string> Params { get; set; } = new();
     }
 }
