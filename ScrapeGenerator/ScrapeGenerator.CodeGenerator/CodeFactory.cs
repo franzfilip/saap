@@ -38,7 +38,13 @@ namespace CodeGenerator {
             foreach (var action in step.Actions) {
                 var a = action;
                 while (a.SubAction != null) {
-                    ActionToGenerate(a, 1, method.Body ??= new List<string>());
+                    if(a.Kind == KindOfAction.ITERATE) {
+                        CreateIterateFunction(step, 0, method.Body ??= new List<string>());
+                        return;
+                    }
+                    else {
+                        ActionToGenerate(a, 0, method.Body ??= new List<string>());
+                    }
                     a = a.SubAction;
                 }
             }
@@ -73,17 +79,17 @@ namespace CodeGenerator {
                case KindOfAction.READ:
                     CreateReadCall(action, tabs, method);
                     break;
-                case KindOfAction.ITERATE:
-                    CreateIterateFunction(action, tabs, method);
-                    if (isSubAction) {
-                        //call iterate function and return data if needed    
-                    }
-                    break;
-                //default:
-                //    if (action.Kind == KindOfAction.ITERATE)
-                //        throw new ArgumentException();
-                    
-                //    throw new NotSupportedException();
+                //case KindOfAction.ITERATE:
+                //    CreateIterateFunction(action, tabs, method);
+                //    if (isSubAction) {
+                //        //call iterate function and return data if needed    
+                //    }
+                //    break;
+                default:
+                    if (action.Kind == KindOfAction.ITERATE)
+                        throw new ArgumentException();
+
+                    throw new NotSupportedException();
             }
         }
 
@@ -115,15 +121,14 @@ namespace CodeGenerator {
         }
 
         private void CreateIterateFunction(Step step, int tabs, List<string> methodBody) {
-            methodBody.Add($"private List<{step.Actions.First().TypeGenerated}> {step.Name}(BasicScraper scraper, Func<List<IWebElement>> getElements) {{".PutTabsBeforeText(tabs));
-            CreateIterateFunctionBody(step.Actions, tabs + 1);
+            CreateIterateFunctionBody(step.Actions, tabs, methodBody);
         }
 
         private void CreateIterateFunctionBody(List<DataModel.Action> actions, int tabs, List<string> methodBody, string name = "collected") {
             methodBody.Add("List<IWebElement> elements = getElements();".PutTabsBeforeText(tabs));
             methodBody.Add($"List<{actions.First().TypeGenerated}> {name} = new();".PutTabsBeforeText(tabs));
             methodBody.Add("for(int i = 0; i < elements.Count; i++) {".PutTabsBeforeText(tabs));
-            CreateBodyForLoop(actions, tabs + 1);
+            CreateBodyForLoop(actions, tabs + 1, methodBody);
             methodBody.Add("}".PutTabsBeforeText(tabs));
             methodBody.Add($"return {name};".PutTabsBeforeText(tabs));
         }
@@ -132,10 +137,18 @@ namespace CodeGenerator {
             string typeGenerated = actions.First().TypeGenerated;
             methodBody.Add($"{typeGenerated} {typeGenerated.ToLower()} = new {typeGenerated}();".PutTabsBeforeText(tabs));
             methodBody.Add("IWebElement element = elements[i];".PutTabsBeforeText(tabs));
-            CreateSubActions(actions.First(), tabs);
+            CreateSubActions(actions.First(), tabs, methodBody);
             methodBody.Add("scraper.NavigateBack();".PutTabsBeforeText(tabs));
             methodBody.Add("elements = getElements();".PutTabsBeforeText(tabs));
             methodBody.Add($"collected.Add({typeGenerated.ToLower()});".PutTabsBeforeText(tabs));
+        }
+
+        private void CreateSubActions(DataModel.Action action, int tabs, List<string> methodBody) {
+            action = action.SubAction;
+            while (action != null) {
+                ActionToGenerate(action, tabs, methodBody);
+                action = action.SubAction;
+            }
         }
     }
 }

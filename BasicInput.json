@@ -2,6 +2,7 @@
     "Namespace": "GeneratedScraper",
     "ScraperName": "ORFScraper",
     "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff2",
+    "ChromeDriverLocation": "\"C:\\\\chromedriver2\"",
     "Models": [
         {
             "ClassName": "Article",
@@ -45,7 +46,6 @@
         {
             "Description": "Save all main articles of the website",
             "Name": "SaveMainArticles",
-            "NeedsToIterateOverElements": true,
             "Actions": [
                 {
                     "Kind": "ITERATE",
@@ -55,20 +55,20 @@
                     "TypeGenerated": "Article",
                     "SubAction": {
                         "Kind": "READ",
+                        "TypeGenerated": "Article",
                         "PropertyPath": "Title",
                         "SubAction": {
-                            "Kind": "CLICK",
+                            "Kind": "READ",
+                            "PropertyPath": "Description",
+                            "TypeGenerated": "Article",
+                            "ElementIdentifier": "story-lead",
+                            "ElementSelector": "CLASSNAME",
                             "SubAction": {
                                 "Kind": "READ",
-                                "PropertyPath": "Description",
-                                "ElementIdentifier": "story-lead",
-                                "ElementSelector": "CLASSNAME",
-                                "SubAction": {
-                                    "Kind": "READ",
-                                    "PropertyPath": "Text",
-                                    "ElementIdentifier": "story-content",
-                                    "ElementSelector": "CLASSNAME"
-                                }
+                                "PropertyPath": "Text",
+                                "TypeGenerated": "Article",
+                                "ElementIdentifier": "story-content",
+                                "ElementSelector": "CLASSNAME"
                             }
                         }
                     }
