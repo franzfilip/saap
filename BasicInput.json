@@ -1,6 +1,8 @@
 {
     "Namespace": "GeneratedScraper",
-    "Path": "C:\\repos\\saap\\GeneratedStuff",
+    "ScraperName": "ORFScraper",
+    "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff2",
+    "ChromeDriverLocation": "\"C:\\\\chromedriver2\"",
     "Models": [
         {
             "ClassName": "Article",
@@ -44,7 +46,6 @@
         {
             "Description": "Save all main articles of the website",
             "Name": "SaveMainArticles",
-            "NeedsToIterateOverElements": true,
             "Actions": [
                 {
                     "Kind": "ITERATE",
@@ -54,23 +55,20 @@
                     "TypeGenerated": "Article",
                     "SubAction": {
                         "Kind": "READ",
-                        "PropertyPath": "article.Title",
                         "TypeGenerated": "Article",
+                        "PropertyPath": "Title",
                         "SubAction": {
-                            "Kind": "CLICK",
+                            "Kind": "READ",
+                            "PropertyPath": "Description",
+                            "TypeGenerated": "Article",
+                            "ElementIdentifier": "story-lead",
+                            "ElementSelector": "CLASSNAME",
                             "SubAction": {
                                 "Kind": "READ",
-                                "PropertyPath": "article.Description",
+                                "PropertyPath": "Text",
                                 "TypeGenerated": "Article",
-                                "ElementIdentifier": "story-lead",
-                                "ElementSelector": "CLASSNAME",
-                                "SubAction": {
-                                    "Kind": "READ",
-                                    "PropertyPath": "article.Text",
-                                    "TypeGenerated": "Article",
-                                    "ElementIdentifier": "story-content",
-                                    "ElementSelector": "CLASSNAME"
-                                }
+                                "ElementIdentifier": "story-content",
+                                "ElementSelector": "CLASSNAME"
                             }
                         }
                     }

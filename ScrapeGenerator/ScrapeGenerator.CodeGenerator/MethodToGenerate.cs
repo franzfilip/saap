@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CodeGenerator {
-    public class MethodImpl {
-        public MethodSignature Signature { get; set; }
-
+    public record MethodToGenerate {
+        public MethodSignature Signature { get; set; } = new();
+        public List<string> Body { get; set; } = new();
     }
 }

@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model {
+namespace DataModel {
     public record Action {
         public KindOfAction Kind { get; set; }
         public string URL { get; set; }
@@ -14,5 +14,9 @@ namespace Model {
         public string ElementIdentifier { get; set; }
         public Action SubAction { get; set; }
         public string TypeGenerated { get; set; }
+
+        public bool GeneratesData() {
+            return Kind == KindOfAction.READ || Kind == KindOfAction.ITERATE;
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model {
+namespace DataModel {
     public record Model {
         public string ClassName { get; set; }
         public List<MyProperty> Properties { get; set; }
