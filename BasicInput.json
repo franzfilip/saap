@@ -1,7 +1,7 @@
 {
     "Namespace": "GeneratedScraper",
     "ScraperName": "ORFScraper",
-    "Path": "C:\\FH\\Master\\SAAP\\projectrepo\\saap\\GeneratedStuff2",
+    "Path": "C:\\repos\\saap\\GeneratedStuff",
     "ChromeDriverLocation": "\"C:\\\\chromedriver2\"",
     "Models": [
         {

@@ -1,0 +1,34 @@
+{
+    "capabilities": [
+      {
+        "browserName": "chrome",
+        "maxInstances": 5,
+        "seleniumProtocol": "WebDriver",
+        "chromeOptions": {
+          "args": [
+            "--no-sandbox",
+            "--disable-dev-shm-usage"
+          ]
+        }
+      }
+    ],
+    "maxSession": 5,
+    "register": true,
+    "registerCycle": 5000,
+    "cleanUpCycle": 5000,
+    "timeout": 600,
+    "debug": false,
+    "servlets": [],
+    "browserTimeout": 0,
+    "hubHost": "localhost",
+    "hubPort": 4444,
+    "nodePolling": 5000,
+    "unregisterIfStillDownAfter": 60000,
+    "downPollingLimit": 2,
+    "nodeStatusCheckTimeout": 5000,
+    "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+    "maxSessPerNode": 5,
+    "nodeApplicationName": "selenium",
+    "jettyMaxThreads": -1
+}
+  

@@ -1,6 +1,8 @@
 ﻿using DomainModels;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
@@ -13,13 +15,27 @@ using System.Xml.Linq;
 namespace SeleniumBasicUtilities {
     public class BasicScraper : IDisposable, IBasicScraper {
 
-        protected readonly ChromeDriver driver;
+        protected readonly WebDriver driver;
 
         public BasicScraper(string driverpath) {
             driver = CreateDriver(driverpath);
         }
 
+        public BasicScraper() {
+            driver = CreateDriver(CreateOptions());
+        }
+
+        private WebDriver CreateDriver(ChromeOptions options) {
+            return new RemoteWebDriver(new Uri("http://localhost:4444/wd/hub"), options.ToCapabilities());
+        }
+
         private ChromeDriver CreateDriver(string driverpath) {
+            ChromeOptions options = CreateOptions();
+
+            return new ChromeDriver(driverpath, options);
+        }
+
+        private ChromeOptions CreateOptions() {
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--no-sandbox");
             options.AddArgument("start-maximized");
@@ -42,7 +58,7 @@ namespace SeleniumBasicUtilities {
             }
             options.AddExcludedArgument("enable-automation");
 
-            return new ChromeDriver(driverpath, options);
+            return options;
         }
 
         public void Dispose() {

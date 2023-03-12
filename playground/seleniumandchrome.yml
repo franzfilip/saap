@@ -1,0 +1,47 @@
+version: "3"
+services:
+  hub:
+    image: selenium/hub:latest
+    ports:
+      - "4444:4444"
+  chrome:
+    image: selenium/node-chrome:latest
+    volumes:
+      - /dev/shm:/dev/shm
+      - ./node-config.json:/opt/selenium/config.json
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - HUB_PORT=4444
+      - NODE_MAX_SESSION=5
+      - NODE_MAX_INSTANCES=5
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=5556
+      - SE_NODE_MAX_SESSIONS=1
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_GRID_URL=http://hub:4444
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=5557
+
+# version: "3"
+# services:
+#   hub:
+#     image: selenium/hub:latest
+#     ports:
+#       - "4444:4444"
+#   chrome:
+#     image: selenium/node-chrome:latest
+#     volumes:
+#       - /dev/shm:/dev/shm
+#     depends_on:
+#       - hub
+#     environment:
+#       - HUB_HOST=selenium-hub
+#       - HUB_PORT=4444
+#       - NODE_MAX_SESSION=5
+#       - NODE_MAX_INSTANCES=5
+#       - SE_EVENT_BUS_HOST=selenium-hub
+#       - SE_EVENT_BUS_PUBLISH_PORT=5556
+#       - SE_NODE_MAX_SESSIONS=1
+#       - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+#       - SE_NODE_GRID_URL=http://hub:4444

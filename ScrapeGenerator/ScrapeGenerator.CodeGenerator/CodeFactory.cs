@@ -1,4 +1,6 @@
 ﻿using DataModel;
+using System;
+using System.Reflection.Metadata;
 using Utility;
 
 namespace CodeGenerator {
@@ -37,9 +39,10 @@ namespace CodeGenerator {
         private void CreateMethodBody(Step step, MethodToGenerate method) {
             foreach (var action in step.Actions) {
                 var a = action;
-                while (a.SubAction != null) {
+                while (a != null) {
                     if(a.Kind == KindOfAction.ITERATE) {
                         CreateIterateFunction(step, 0, method.Body ??= new List<string>());
+                        SetParamsForMethod(method, action, true);
                         return;
                     }
                     else {
@@ -50,6 +53,14 @@ namespace CodeGenerator {
             }
         }
 
+        private void SetParamsForMethod(MethodToGenerate method, DataModel.Action action, bool reloadsElements) {
+            method.Signature.Params ??= new List<string>();
+            method.Signature.Params.Add("IBasicScraper scraper");
+            if (reloadsElements) {
+                string getElements = $"() => scraper.FindElements(ByMethod.{action.ElementSelector}, \"{action.ElementIdentifier}\");";
+                method.Signature.Params.Add($"Func<List<IWebElement>> getElements = {getElements}" );
+            }
+        }
         private void SetReturnTypeOfMethod(DataModel.Action action, MethodToGenerate method) { 
             if (action.Kind == KindOfAction.ITERATE) {
                 if (!input.CheckIfTypeIsInModels(action.TypeGenerated)) {
@@ -79,12 +90,6 @@ namespace CodeGenerator {
                case KindOfAction.READ:
                     CreateReadCall(action, tabs, method);
                     break;
-                //case KindOfAction.ITERATE:
-                //    CreateIterateFunction(action, tabs, method);
-                //    if (isSubAction) {
-                //        //call iterate function and return data if needed    
-                //    }
-                //    break;
                 default:
                     if (action.Kind == KindOfAction.ITERATE)
                         throw new ArgumentException();
